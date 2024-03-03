@@ -1,0 +1,57 @@
+.container {
+    width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+h1 {
+    text-align: center;
+}
+
+p {
+    margin-bottom: 10px;
+}
+
+#numero-processos {
+    width: 100px;
+    padding: 5px;
+}
+
+#iniciar-simulacao {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+#formulario-processos, #resultado-simulacao {
+    margin-top: 20px;
+}
+
+#formulario-processos.escondido, #resultado-simulacao.escondido {
+    display: none;
+}
+
+#lista-processos {
+    list-style: none;
+    padding: 0;
+}
+
+#lista-processos li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#enviar-processos {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulação de Processos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Simulação de Processos</h1>
+        <p class="mb-3">Digite a quantidade de processos (mínimo 5, máximo 10):</p>
+        <input type="number" id="numero-processos" min="5" max="10" required class="form-control mb-3">
+        <button id="iniciar-simulacao" class="btn btn-primary mb-3">Iniciar Simulação</button>
+        <div id="formulario-processos" class="escondido">
+            <h2 class="mb-3">Dados dos Processos</h2>
+            <ul id="lista-processos" class="list-group mb-3"></ul>
+            <button id="enviar-processos" class="btn btn-dark">Enviar Processos</button>
+        </div>
+        <div id="resultado-simulacao" class="escondido">
+            <h2 class="mb-3">Resultado dos Cálculos</h2>
+            <section id="resultado-fcfs" class="mb-3">
+                <h3>FCFS (First-Come, First Served)</h3>
+                <p>Tempo médio de execução: <span id="fcfs-tempo-execucao"></span></p>
+                <p>Tempo médio de espera dos processos: <span id="fcfs-tempo-espera"></span></p>
+            </section>
+            <section id="resultado-sjf" class="mb-3">
+                <h3>Shortest Job First (SJF)</h3>
+                <p>Tempo médio de execução: <span id="sjf-tempo-execucao"></span></p>
+                <p>Tempo médio de espera dos processos: <span id="sjf-tempo-espera"></span></p>
+            </section>
+            <section id="resultado-rr" class="mb-3">
+                <h3>Round Robin (RR)</h3>
+                <p>Tempo médio de execução: <span id="rr-tempo-execucao"></span></p>
+                <p>Tempo médio de espera dos processos: <span id="rr-tempo-espera"></span></p>
+            </section>
+            <section id="resultado-srtf">
+                <h3>Shortest Remaining Time First (SRTF)</h3>
+                <p>Tempo médio de execução: <span id="srtf-tempo-execucao"></span></p>
+                <p>Tempo médio de espera dos processos: <span id="srtf-tempo-espera"></span></p>
+            </section>
+        </div>
+        <div id="error-container" class="alert alert-danger mb-3" style="display: none;"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
