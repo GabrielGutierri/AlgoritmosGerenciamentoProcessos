@@ -82,6 +82,8 @@ enviarProcessosBtn.addEventListener('click', () => {
     document.getElementById('srtf-tempo-espera').textContent = resultadosMockados.srtf.tempoEspera;
 
     resultadoSimulacao.classList.remove('escondido'); // Exibe a seção de resultados
+    calculoFcFS();
+    calculoRR();
 });
 
 function showError(message) {
@@ -150,12 +152,93 @@ function calculoFcFS(){
              
         }
         tempoExecucao = tempoEspera + arrayOrdenado[index].tempoServico;
-        console.log(`${p.numeroProcesso}: ${tempoExecucao}`);
+
         somaTempoEspera += tempoEspera - p.tempoChegada;
         somaTempoExec += tempoExecucao - p.tempoChegada;
     });
     let mediaEspera = somaTempoEspera / arrayOrdenado.length;
     let mediaExec = somaTempoExec / arrayOrdenado.length;
-    console.log(`Média Espera: ${mediaEspera}`);
-    console.log(`Média exec: ${mediaExec}`);
+}
+
+function calculoRR(){
+    // Sort processes by arrival time
+    let processes = [
+        {
+            numeroProcesso: 1,
+            tempoChegada: 0,
+            tempoServico: 5,
+            prioridade: 2
+        },
+        {
+            numeroProcesso: 2,
+            tempoChegada: 0,
+            tempoServico: 2,
+            prioridade: 3
+        },
+        {
+            numeroProcesso: 3,
+            tempoChegada: 1,
+            tempoServico: 4,
+            prioridade: 1
+        },
+        {
+            numeroProcesso: 4,
+            tempoChegada: 3,
+            tempoServico: 1,
+            prioridade: 4
+        },
+        {
+            numeroProcesso: 5,
+            tempoChegada: 5,
+            tempoServico: 2,
+            prioridade: 5
+        }
+    ];
+    processes.sort((a, b) => a.tempoChegada - b.tempoChegada);
+
+    let tempoServicoTotal = processes.reduce((soma, processo) => soma + processo.tempoServico, 0);
+
+    let filaPronto = [];
+    let quantum = 2;
+    let processoTerminado = true;
+    let processoAtual = {};
+    let ordemProcesso = [];
+    for(let tempoAtual=0; tempoAtual <= tempoServicoTotal; tempoAtual++){
+        //verificar se chegou algum processo no tempo atual.
+        processes.forEach(processo => {
+            if(processo.tempoChegada == tempoAtual){
+                filaPronto.push({numeroProcesso: processo.numeroProcesso, tempoChegada: processo.tempoChegada, tempoServico: processo.tempoServico});
+            }
+        });
+        //ver o processo atual e verificar se ele está executando;
+        if(processoTerminado == true){
+            processoAtual = filaPronto[0];
+            processoTerminado = false;
+        }
+
+        if(processoTerminado == false){
+            quantum--;
+        }
+
+        if(quantum == 0){
+            tempoFimExecucao = tempoAtual;
+            processoTerminado = true;
+            ordemProcesso.push(filaPronto[0].numeroProcesso);
+            if(filaPronto[0].tempoServico - 2 > 0){
+                filaPronto.push({numeroProcesso: filaPronto[0].numeroProcesso, 
+                                tempoChegada: filaPronto[0].tempoChegada, 
+                                tempoServico: filaPronto[0].tempoServico - 2})
+            }
+            filaPronto.shift();
+            quantum = 2;
+        }
+    }
+
+    if(filaPronto.length == 1){ //se sobrar um valor da fila de pronto, ele só pode ser 1, já q estou considerando o quantum igual a 2
+        ordemProcesso.push(filaPronto[0].numeroProcesso);
+        filaPronto.shift();
+    }
+    //tenho a ordem em que os processos foram executados. Agora, posso fazer os cálculos de tempo médio de execução e espera
+    //Tempo médio execução.
+    
 }
