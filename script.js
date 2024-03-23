@@ -2,6 +2,9 @@ import { calculoPRIOp } from "./algoritmos/priop.js";
 import { calculoSRTF } from "./algoritmos/srtf.js";
 import { calculofcfs } from "./algoritmos/fcfs.js";
 import { calculoRR } from "./algoritmos/rr.js";
+import { calculoPRIOc } from "./algoritmos/prioc.js";
+import { calculoSJF } from "./algoritmos/sjf.js";
+
 
 const numeroProcessosInput = document.getElementById('numero-processos');
 const iniciarSimulacaoBtn = document.getElementById('iniciar-simulacao');
@@ -120,10 +123,12 @@ enviarProcessosBtn.addEventListener('click', () => {
         }
        ]
 
-    // calculofcfs(processosArray);
-    // calculoSRTF(processosArray);
-    // calculoPRIOp(processosArray);
-    calculoRR(processosArray);
+    calculoPRIOc(processosArray);
+    calculoSJF(processosArray);       
+    //calculofcfs(processosArray);
+    //calculoSRTF(processosArray);
+    //calculoPRIOp(processosArray);
+    //calculoRR(processosArray);
 });
 
 function showError(message) {
