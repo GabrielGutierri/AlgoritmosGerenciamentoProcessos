@@ -5,7 +5,6 @@ import { calculoRR } from "./algoritmos/rr.js";
 import { calculoPRIOc } from "./algoritmos/prioc.js";
 import { calculoSJF } from "./algoritmos/sjf.js";
 
-
 const numeroProcessosInput = document.getElementById('numero-processos');
 const iniciarSimulacaoBtn = document.getElementById('iniciar-simulacao');
 const formularioProcessos = document.getElementById('formulario-processos');
@@ -13,18 +12,18 @@ const listaProcessos = document.getElementById('lista-processos');
 const enviarProcessosBtn = document.getElementById('enviar-processos');
 const resultadoSimulacao = document.getElementById('resultado-simulacao');
 const errorContainer = document.getElementById('error-container');
+const tabelaContainer = document.getElementById('tabela-container');
 
 iniciarSimulacaoBtn.addEventListener('click', () => {
     const numeroProcessos = parseInt(numeroProcessosInput.value);
     
-    // Verifica se o número de processos está dentro do intervalo permitido
     if (numeroProcessos < 5 || numeroProcessos > 10) {
         showError("A quantidade de processos deve ser entre 5 e 10.");
         return;
     }
     
     formularioProcessos.classList.remove('escondido');
-    listaProcessos.innerHTML = ''; // Limpa a lista antes de adicionar novos elementos
+    listaProcessos.innerHTML = '';
 
     for (let i = 1; i <= numeroProcessos; i++) {
         const itemLista = document.createElement('li');
@@ -45,17 +44,16 @@ iniciarSimulacaoBtn.addEventListener('click', () => {
 
 enviarProcessosBtn.addEventListener('click', () => {
     const listaInputs = listaProcessos.getElementsByTagName('input');
-    const listaObjetos = [];
 
-    // Verifica se todos os campos estão preenchidos
-    // for (let input of listaInputs) {
-    //     if (input.value === '') {
-    //         showError("Todos os campos devem ser preenchidos.");
-    //         return;
-    //     }
-    // }
+    for (let input of listaInputs) {
+        if (input.value === '') {
+            showError("Todos os campos devem ser preenchidos.");
+            return;
+        }
+    }
 
-    for (let i = 0; i < listaInputs.length; i += 3) { // Itera de 3 em 3, pois há 3 inputs por processo
+    const processosArray = [];
+    for (let i = 0; i < listaInputs.length; i += 3) {
         const numeroProcesso = i / 3 + 1;
         const tempoChegada = parseInt(listaInputs[i].value);
         const tempoServico = parseInt(listaInputs[i + 1].value);
@@ -64,14 +62,13 @@ enviarProcessosBtn.addEventListener('click', () => {
         const objetoProcesso = {
             numeroProcesso: numeroProcesso,
             tempoChegada: tempoChegada,
-            tempoEspera: 0, // Inicializa como 0, pode ser ajustado conforme necessário
+            tempoEspera: 0,
             prioridade: prioridade
         };
 
-        listaObjetos.push(objetoProcesso);
+        processosArray.push(objetoProcesso);
     }
 
-    // Cálculos mockados para os resultados
     const resultadosMockados = {
         fcfs: { tempoExecucao: '30s', tempoEspera: '10s' },
         sjf: { tempoExecucao: '25s', tempoEspera: '5s' },
@@ -79,7 +76,6 @@ enviarProcessosBtn.addEventListener('click', () => {
         srtf: { tempoExecucao: '20s', tempoEspera: '2s' }
     };
 
-    // Preenchendo os resultados mockados nos elementos HTML
     document.getElementById('fcfs-tempo-execucao').textContent = resultadosMockados.fcfs.tempoExecucao;
     document.getElementById('fcfs-tempo-espera').textContent = resultadosMockados.fcfs.tempoEspera;
     document.getElementById('sjf-tempo-execucao').textContent = resultadosMockados.sjf.tempoExecucao;
@@ -89,49 +85,48 @@ enviarProcessosBtn.addEventListener('click', () => {
     document.getElementById('srtf-tempo-execucao').textContent = resultadosMockados.srtf.tempoExecucao;
     document.getElementById('srtf-tempo-espera').textContent = resultadosMockados.srtf.tempoEspera;
 
-    resultadoSimulacao.classList.remove('escondido'); // Exibe a seção de resultados
-    let processosArray = [
-        {
-            numeroProcesso: 1,
-            tempoChegada: 0,
-            tempoServico: 5,
-            prioridade: 2
-        },
-        {
-            numeroProcesso: 2,
-            tempoChegada: 0,
-            tempoServico: 2,
-            prioridade: 3
-        },
-        {
-            numeroProcesso: 3,
-            tempoChegada: 1,
-            tempoServico: 4,
-            prioridade: 1
-        },
-        {
-            numeroProcesso: 4,
-            tempoChegada: 3,
-            tempoServico: 1,
-            prioridade: 4
-        },
-        {
-            numeroProcesso: 5,
-            tempoChegada: 5,
-            tempoServico: 2,
-            prioridade: 5
-        }
-       ]
+    resultadoSimulacao.classList.remove('escondido');
 
-    calculoPRIOc(processosArray);
-    calculoSJF(processosArray);       
+    //calculoPRIOc(processosArray);
+    //calculoSJF(processosArray);
     //calculofcfs(processosArray);
     //calculoSRTF(processosArray);
-    //calculoPRIOp(processosArray);
+    calculoPRIOp(processosArray);
     //calculoRR(processosArray);
+
+    // Criar tabelas
+    const algoritmos = ['FCFS', 'SJF', 'RR', 'SRTF', 'PRIOP', 'PRIOC'];
+    for (let algoritmo of algoritmos) {
+        const tabela = criarTabela(algoritmo);
+        tabelaContainer.appendChild(tabela);
+    }
 });
+
+function criarTabela(algoritmo) {
+    const tabela = document.createElement('table');
+    tabela.classList.add('table', 'table-striped', 'mb-5');
+    tabela.innerHTML = `
+        <caption>${algoritmo}</caption>
+        <thead>
+            <tr>
+                <th scope="col">Número do Processo</th>
+                <th scope="col">Tempo de Término</th>
+                <th scope="col">Tempo Ativo</th>
+                <th scope="col">Tempo de Espera</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Os dados da tabela serão preenchidos dinamicamente aqui -->
+        </tbody>
+    `;
+    return tabela;
+}
 
 function showError(message) {
     errorContainer.textContent = message;
     errorContainer.style.display = 'block';
+    setTimeout(() => {
+        errorContainer.textContent = '';
+        errorContainer.style.display = 'none';
+    }, 3000);
 }

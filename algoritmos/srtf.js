@@ -1,4 +1,5 @@
 export const calculoSRTF = (processes) => {
+    console.log('entrou aq');
     let filaExecucaoPorTempo = []
     processes.sort((a, b) => a.tempoChegada - b.tempoChegada);
     processes.forEach(p => p.tempoRestante = p.tempoServico);
@@ -32,4 +33,7 @@ export const calculoSRTF = (processes) => {
         }
         filaExecucaoPorTempo.push({tempo: tempoAtual, processo: processoMaisCurto});
     }
+
+    console.log('filaExecucaoPorTempo - > ' , filaExecucaoPorTempo);
+    return filaExecucaoPorTempo;
 } 

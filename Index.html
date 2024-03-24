@@ -39,8 +39,22 @@
                 <h3>Shortest Remaining Time First (SRTF)</h3>
                 <p>Tempo médio de execução: <span id="srtf-tempo-execucao"></span></p>
                 <p>Tempo médio de espera dos processos: <span id="srtf-tempo-espera"></span></p>
-            </section>
-        </div>
+            
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Número do Processo</th>
+                            <th scope="col">Tempo de Término</th>
+                            <th scope="col">Tempo Ativo</th>
+                            <th scope="col">Tempo de Espera</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-srtf-body">
+                        <!-- Linhas da tabela serão adicionadas dinamicamente pelo JavaScript -->
+                    </tbody>
+                </table>
+            </section>   
+            </div>
         <div id="error-container" class="alert alert-danger mb-3" style="display: none;"></div>
     </div>
     <script src="script.js" type="module"></script>
