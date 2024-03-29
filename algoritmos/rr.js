@@ -1,3 +1,5 @@
+import { calculaMediaEspera, calculaMediaExecucao } from "../utils.js";
+
 export const calculoRR = (processes) => {
     processes.sort((a, b) => a.tempoChegada - b.tempoChegada);
     let tempoServicoTotal = 0;
@@ -45,5 +47,6 @@ export const calculoRR = (processes) => {
             processoAtual = filaPronto[0];
         }
     }
-    console.log(filaExecucaoPorTempo);
+    let mediaExecucao = calculaMediaExecucao(processes, filaExecucaoPorTempo);
+    let mediaEspera = calculaMediaEspera(processes, filaExecucaoPorTempo);
 }

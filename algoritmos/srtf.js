@@ -1,3 +1,5 @@
+import { calculaMediaEspera, calculaMediaExecucao } from "../utils.js";
+
 export const calculoSRTF = (processes) => {
     console.log('entrou aq');
     let filaExecucaoPorTempo = []
@@ -31,9 +33,8 @@ export const calculoSRTF = (processes) => {
             processoMaisCurto.tempoConclusao = tempoAtual;
 
         }
-        filaExecucaoPorTempo.push({tempo: tempoAtual, processo: processoMaisCurto});
+        filaExecucaoPorTempo.push({tempo: tempoAtual, processo: processoMaisCurto.numeroProcesso});
     }
-
-    console.log('filaExecucaoPorTempo - > ' , filaExecucaoPorTempo);
-    return filaExecucaoPorTempo;
+    let mediaExecucao = calculaMediaExecucao(processes, filaExecucaoPorTempo);
+    let mediaEspera = calculaMediaEspera(processes, filaExecucaoPorTempo);
 } 
