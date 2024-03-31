@@ -24,6 +24,19 @@
                 <h3>FCFS (First-Come, First Served)</h3>
                 <p>Tempo médio de execução: <span id="fcfs-tempo-execucao"></span></p>
                 <p>Tempo médio de espera dos processos: <span id="fcfs-tempo-espera"></span></p>
+                <table class="table-fcfs">
+                    <thead>
+                        <tr>
+                            <th scope="col">Número do Processo</th>
+                            <th scope="col">Tempo de Término</th>
+                            <th scope="col">Tempo Ativo</th>
+                            <th scope="col">Tempo de Espera</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-fcfs-body">
+                        <!-- Linhas da tabela serão adicionadas dinamicamente pelo JavaScript -->
+                    </tbody>
+                </table>
             </section>
             <section id="resultado-sjf" class="mb-3">
                 <h3>Shortest Job First (SJF)</h3>
@@ -34,13 +47,26 @@
                 <h3>Round Robin (RR)</h3>
                 <p>Tempo médio de execução: <span id="rr-tempo-execucao"></span></p>
                 <p>Tempo médio de espera dos processos: <span id="rr-tempo-espera"></span></p>
+                <table class="table-rr">
+                    <thead>
+                        <tr>
+                            <th scope="col">Número do Processo</th>
+                            <th scope="col">Tempo de Término</th>
+                            <th scope="col">Tempo Ativo</th>
+                            <th scope="col">Tempo de Espera</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-rr-body">
+                        <!-- Linhas da tabela serão adicionadas dinamicamente pelo JavaScript -->
+                    </tbody>
+                </table>
             </section>
             <section id="resultado-srtf">
                 <h3>Shortest Remaining Time First (SRTF)</h3>
                 <p>Tempo médio de execução: <span id="srtf-tempo-execucao"></span></p>
                 <p>Tempo médio de espera dos processos: <span id="srtf-tempo-espera"></span></p>
             
-                <table class="table">
+                <table class="table-srtf">
                     <thead>
                         <tr>
                             <th scope="col">Número do Processo</th>
@@ -50,6 +76,24 @@
                         </tr>
                     </thead>
                     <tbody id="tabela-srtf-body">
+                        <!-- Linhas da tabela serão adicionadas dinamicamente pelo JavaScript -->
+                    </tbody>
+                </table>
+            </section>
+            <section id="resultado-priop" class="mb-3">
+                <h3>PRIOp</h3>
+                <p>Tempo médio de execução: <span id="priop-tempo-execucao"></span></p>
+                <p>Tempo médio de espera dos processos: <span id="priop-tempo-espera"></span></p>
+                <table class="table-priop">
+                    <thead>
+                        <tr>
+                            <th scope="col">Número do Processo</th>
+                            <th scope="col">Tempo de Término</th>
+                            <th scope="col">Tempo Ativo</th>
+                            <th scope="col">Tempo de Espera</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-priop-body">
                         <!-- Linhas da tabela serão adicionadas dinamicamente pelo JavaScript -->
                     </tbody>
                 </table>

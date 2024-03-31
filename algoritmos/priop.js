@@ -1,3 +1,5 @@
+import { calculaMediaEspera, calculaMediaExecucao, verificaUltimoProcessoTempo } from "../utils.js";
+
 export const calculoPRIOp = (processes) => {
     let filaExecucaoPorTempo = [];
     processes.sort((a, b) => a.tempoChegada - b.tempoChegada);
@@ -30,6 +32,9 @@ export const calculoPRIOp = (processes) => {
             processosCompletos++;
             processoMaiorPrioridade.tempoConclusao = tempoAtual;
         }
-        filaExecucaoPorTempo.push({tempo: tempoAtual, processo: processoMaiorPrioridade});
+        filaExecucaoPorTempo.push({tempo: tempoAtual, processo: processoMaiorPrioridade.numeroProcesso});
     }
+    let mediaExecucao = calculaMediaExecucao(processes, filaExecucaoPorTempo);
+    let mediaEspera = calculaMediaEspera(processes, filaExecucaoPorTempo);
+    return {mediaExecucao: mediaExecucao, mediaEspera: mediaEspera[0], temposEspera: mediaEspera[1], processos: processes, ultimosProcessos: mediaEspera[2]};
 }

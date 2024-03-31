@@ -76,15 +76,10 @@ enviarProcessosBtn.addEventListener('click', () => {
         srtf: { tempoExecucao: '20s', tempoEspera: '2s' }
     };
 
-    document.getElementById('fcfs-tempo-execucao').textContent = resultadosMockados.fcfs.tempoExecucao;
-    document.getElementById('fcfs-tempo-espera').textContent = resultadosMockados.fcfs.tempoEspera;
+    
     document.getElementById('sjf-tempo-execucao').textContent = resultadosMockados.sjf.tempoExecucao;
     document.getElementById('sjf-tempo-espera').textContent = resultadosMockados.sjf.tempoEspera;
-    document.getElementById('rr-tempo-execucao').textContent = resultadosMockados.rr.tempoExecucao;
-    document.getElementById('rr-tempo-espera').textContent = resultadosMockados.rr.tempoEspera;
-    document.getElementById('srtf-tempo-execucao').textContent = resultadosMockados.srtf.tempoExecucao;
-    document.getElementById('srtf-tempo-espera').textContent = resultadosMockados.srtf.tempoEspera;
-
+    
     resultadoSimulacao.classList.remove('escondido');
 
     let processos = [
@@ -123,37 +118,98 @@ enviarProcessosBtn.addEventListener('click', () => {
        processos.sort((a, b) => a.tempoChegada - b.tempoChegada);
     //calculoPRIOc(processosArray);
     //calculoSJF(processosArray);
-    //calculofcfs(processosArray);
-    //calculoSRTF(processos);
-    //calculoPRIOp(processosArray);
-    calculoRR(processos);
+    criaTabelaFCFS(processos);
+    criaTabelaSRTF(processos);
+    criaTabelaPRIOp(processos);
+    criaTabelaRR(processos);
 
-    // Criar tabelas
-    const algoritmos = ['FCFS', 'SJF', 'RR', 'SRTF', 'PRIOP', 'PRIOC'];
-    for (let algoritmo of algoritmos) {
-        const tabela = criarTabela(algoritmo);
-        tabelaContainer.appendChild(tabela);
-    }
 });
 
-function criarTabela(algoritmo) {
-    const tabela = document.createElement('table');
-    tabela.classList.add('table', 'table-striped', 'mb-5');
-    tabela.innerHTML = `
-        <caption>${algoritmo}</caption>
-        <thead>
-            <tr>
-                <th scope="col">Número do Processo</th>
-                <th scope="col">Tempo de Término</th>
-                <th scope="col">Tempo Ativo</th>
-                <th scope="col">Tempo de Espera</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Os dados da tabela serão preenchidos dinamicamente aqui -->
-        </tbody>
-    `;
-    return tabela;
+function criaTabelaFCFS(processos){
+    let retorno = calculofcfs(processos);
+    document.getElementById('fcfs-tempo-execucao').textContent = retorno.mediaExecucao;
+    document.getElementById('fcfs-tempo-espera').textContent = retorno.mediaEspera;
+    criarTabelaFCFS(processos, retorno.temposEspera);
+}
+
+function criarTabelaFCFS(processos, temposEspera){
+    let tabelaBody = document.getElementById("tabela-fcfs-body");
+    
+    processos.forEach(p => {
+        let newRow = tabelaBody.insertRow();
+        let cell1 = newRow.insertCell(0);
+        let cell2 = newRow.insertCell(1);
+        let cell3 = newRow.insertCell(2);
+        let cell4 = newRow.insertCell(3);
+        let tempoEspera = 0;
+        temposEspera.forEach(t => {
+            if(t.processo == p.numeroProcesso){
+                tempoEspera = t.tempo;
+            }
+        })
+        // Adicione valores às células
+        cell1.innerHTML = p.numeroProcesso; // Número do Processo
+        cell2.innerHTML = tempoEspera + p.tempoServico;   // Tempo de Término
+        cell3.innerHTML = p.tempoServico; // Tempo Ativo
+        cell4.innerHTML = tempoEspera; // Tempo de Espera - OK
+    });
+}
+
+function criaTabelaSRTF(processos){
+    let retorno = calculoSRTF(processos);
+    document.getElementById('srtf-tempo-execucao').textContent = retorno.mediaExecucao;
+    document.getElementById('srtf-tempo-espera').textContent = retorno.mediaEspera;
+    criarTabela(retorno, 'tabela-srtf-body', 'SRTF');
+}
+
+function criaTabelaRR(processos){
+    let retorno = calculoRR(processos);
+    document.getElementById('rr-tempo-execucao').textContent = retorno.mediaExecucao;
+    document.getElementById('rr-tempo-espera').textContent = retorno.mediaEspera;
+    criarTabela(retorno, 'tabela-rr-body', 'RR');
+    
+}
+
+function criaTabelaPRIOp(processos){
+    let retorno = calculoPRIOp(processos);
+    document.getElementById('priop-tempo-execucao').textContent = retorno.mediaExecucao;
+    document.getElementById('priop-tempo-espera').textContent = retorno.mediaEspera;
+    criarTabela(retorno, 'tabela-priop-body', 'PRIOp');
+}
+
+function criarTabela(retornoAlgoritmo, bodyID) {
+    let processos = retornoAlgoritmo.processos;
+    let ultimosTempos = retornoAlgoritmo.ultimosProcessos;
+    let temposEspera = retornoAlgoritmo.temposEspera;
+    
+    let tabelaBody = document.getElementById(bodyID);
+
+    processos.forEach(p => {
+        let ultimoTempoProcesso = 0; 
+        let tempoEspera = 0;
+        ultimosTempos.forEach(t => {
+            if(t.processo == p.numeroProcesso){
+                ultimoTempoProcesso = t.ultimoTempo;
+            }
+        });
+
+        temposEspera.forEach(tE => {
+            if(tE.numeroProcesso == p.numeroProcesso){
+                tempoEspera = tE.tempo;
+            }
+        });
+        let newRow = tabelaBody.insertRow();
+        let cell1 = newRow.insertCell(0);
+        let cell2 = newRow.insertCell(1);
+        let cell3 = newRow.insertCell(2);
+        let cell4 = newRow.insertCell(3);
+
+        // Adicione valores às células
+        cell1.innerHTML = p.numeroProcesso; // Número do Processo
+        cell2.innerHTML = ultimoTempoProcesso;   // Tempo de Término
+        cell3.innerHTML = ultimoTempoProcesso - p.tempoChegada; // Tempo Ativo
+        cell4.innerHTML = tempoEspera; // Tempo de Espera
+    });
 }
 
 function showError(message) {

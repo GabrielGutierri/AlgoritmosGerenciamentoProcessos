@@ -49,4 +49,5 @@ export const calculoRR = (processes) => {
     }
     let mediaExecucao = calculaMediaExecucao(processes, filaExecucaoPorTempo);
     let mediaEspera = calculaMediaEspera(processes, filaExecucaoPorTempo);
+    return {mediaExecucao: mediaExecucao, mediaEspera: mediaEspera[0], temposEspera: mediaEspera[1], processos: processes, ultimosProcessos: mediaEspera[2]};
 }
