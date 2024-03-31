@@ -82,46 +82,12 @@ enviarProcessosBtn.addEventListener('click', () => {
     
     resultadoSimulacao.classList.remove('escondido');
 
-    let processos = [
-        {
-            numeroProcesso: 1,
-            tempoChegada: 0,
-            tempoServico: 5,
-            prioridade: 2
-        },
-        {
-            numeroProcesso: 2,
-            tempoChegada: 0,
-            tempoServico: 2,
-            prioridade: 3
-        },
-        {
-            numeroProcesso: 3,
-            tempoChegada: 1,
-            tempoServico: 4,
-            prioridade: 1
-        },
-        {
-            numeroProcesso: 4,
-            tempoChegada: 3,
-            tempoServico: 1,
-            prioridade: 4
-        },
-        {
-            numeroProcesso: 5,
-            tempoChegada: 5,
-            tempoServico: 2,
-            prioridade: 5
-        }
-    
-       ];
-       processos.sort((a, b) => a.tempoChegada - b.tempoChegada);
     //calculoPRIOc(processosArray);
     //calculoSJF(processosArray);
-    criaTabelaFCFS(processos);
-    criaTabelaSRTF(processos);
-    criaTabelaPRIOp(processos);
-    criaTabelaRR(processos);
+    criaTabelaFCFS(processosArray);
+    criaTabelaSRTF(processosArray);
+    criaTabelaPRIOp(processosArray);
+    criaTabelaRR(processosArray);
 
 });
 
