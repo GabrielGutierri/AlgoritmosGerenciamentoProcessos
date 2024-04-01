@@ -71,46 +71,12 @@ enviarProcessosBtn.addEventListener('click', () => {
     }
 
     resultadoSimulacao.classList.remove('escondido');
-    let processos = [
-        {
-            numeroProcesso: 1,
-            tempoChegada: 0,
-            tempoServico: 5,
-            prioridade: 2
-        },
-        {
-            numeroProcesso: 2,
-            tempoChegada: 0,
-            tempoServico: 2,
-            prioridade: 3
-        },
-        {
-            numeroProcesso: 3,
-            tempoChegada: 1,
-            tempoServico: 4,
-            prioridade: 1
-        },
-        {
-            numeroProcesso: 4,
-            tempoChegada: 3,
-            tempoServico: 1,
-            prioridade: 4
-        },
-        {
-            numeroProcesso: 5,
-            tempoChegada: 5,
-            tempoServico: 2,
-            prioridade: 5
-        }
-
-       ];
-       processos.sort((a, b) => a.tempoChegada - b.tempoChegada);
-    criaTabelaSJF(processos);
-    criaTabelaFCFS(processos);
-    criaTabelaPRIOc(processos);
-    criaTabelaSRTF(processos);
-    criaTabelaPRIOp(processos);
-    criaTabelaRR(processos);
+    criaTabelaSJF(processosArray);
+    criaTabelaFCFS(processosArray);
+    criaTabelaPRIOc(processosArray);
+    criaTabelaSRTF(processosArray);
+    criaTabelaPRIOp(processosArray);
+    criaTabelaRR(processosArray);
 });
 
 function criaTabelaFCFS(processos){
@@ -149,39 +115,7 @@ function criaTabelaSJF(processos){
     document.getElementById('sjf-tempo-execucao').textContent = retorno.mediaExecucao;
     document.getElementById('sjf-tempo-espera').textContent = retorno.mediaEspera;
 
-    criarTabelaSJF(processos, retorno.filaPorTempo);
-}
-
-function criarTabelaSJF(processos, filaPorTempo){
-    let tabelaBody = document.getElementById("tabela-sjf-body");
-
-    processos.forEach(p => {
-        let newRow = tabelaBody.insertRow();
-        let cell1 = newRow.insertCell(0);
-        let cell2 = newRow.insertCell(1);
-        let cell3 = newRow.insertCell(2);
-        let cell4 = newRow.insertCell(3);
-        let tempoEspera = 0;
-
-        filaPorTempo.forEach(f => {
-            if (f.processo.numeroProcesso === p.numeroProcesso) {
-                // Cálculo do tempo de término
-                const tempoTermino = f.tempo;
-                
-                // Cálculo do tempo ativo
-                const tempoAtivo = tempoTermino - p.tempoChegada;
-
-                // Cálculo do tempo de espera
-                tempoEspera = tempoAtivo - p.tempoServico;
-                
-                // Adicione valores às células
-                cell1.innerHTML = p.numeroProcesso;
-                cell2.innerHTML = tempoTermino;
-                cell3.innerHTML = tempoAtivo;
-                cell4.innerHTML = tempoEspera;
-            }
-        });
-    });
+    criarTabela(retorno, 'tabela-sjf-body', 'SJF');
 }
 
 function criaTabelaPRIOc(processos){
@@ -189,41 +123,8 @@ function criaTabelaPRIOc(processos){
     document.getElementById('prioc-tempo-execucao').textContent = retorno.mediaExecucao;
     document.getElementById('prioc-tempo-espera').textContent = retorno.mediaEspera;
 
-    criarTabelaPRIOc(processos, retorno.filaPorTempo);
+    criarTabela(retorno, 'tabela-prioc-body', 'PRIOp');
 }
-
-function criarTabelaPRIOc(processos, filaPorTempo){
-    let tabelaBody = document.getElementById("tabela-prioc-body");
-
-    processos.forEach(p => {
-        let newRow = tabelaBody.insertRow();
-        let cell1 = newRow.insertCell(0);
-        let cell2 = newRow.insertCell(1);
-        let cell3 = newRow.insertCell(2);
-        let cell4 = newRow.insertCell(3);
-        let tempoEspera = 0;
-
-        filaPorTempo.forEach(f => {
-            if (f.processo.numeroProcesso === p.numeroProcesso) {
-                // Cálculo do tempo de término
-                const tempoTermino = f.tempo;
-                
-                // Cálculo do tempo ativo
-                const tempoAtivo = tempoTermino - p.tempoChegada;
-
-                // Cálculo do tempo de espera
-                tempoEspera = tempoAtivo - p.tempoServico;
-                
-                // Adicione valores às células
-                cell1.innerHTML = p.numeroProcesso;
-                cell2.innerHTML = tempoTermino;
-                cell3.innerHTML = tempoAtivo;
-                cell4.innerHTML = tempoEspera;
-            }
-        });
-    });
-}
-
 
 function criaTabelaSRTF(processos){
     let retorno = calculoSRTF(processos);
