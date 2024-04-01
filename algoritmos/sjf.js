@@ -66,7 +66,7 @@ export const calculoSJF = (processes) => {
         }
 
         // Registra o processo executado na fila de execução por tempo
-        filaExecucaoPorTempo.push({ tempo: tempoAtual, processo: processoMaisCurto });
+        filaExecucaoPorTempo.push({ tempo: tempoAtual, processo: processoMaisCurto.numeroProcesso });
     }
 
     // Calcula o valor médio de espera e o valor médio de execução para cada processo
@@ -85,6 +85,6 @@ export const calculoSJF = (processes) => {
 
     let mediaExecucao = calculaMediaExecucao(processes, filaExecucaoPorTempo);
     let mediaEspera = calculaMediaEspera(processes, filaExecucaoPorTempo);
-
-    return {mediaExecucao: mediaTemposExecucaoIndividuais, mediaEspera: mediaTemposEsperaIndividuais, temposEspera: mediaEspera[1], processos: processes, ultimosProcessos: mediaEspera[2], filaPorTempo: filaExecucaoPorTempo};
+    console.log(filaExecucaoPorTempo);
+    return {mediaExecucao: mediaExecucao, mediaEspera: mediaEspera[0], temposEspera: mediaEspera[1], processos: processes, ultimosProcessos: mediaEspera[2], filaPorTempo: filaExecucaoPorTempo};
 }

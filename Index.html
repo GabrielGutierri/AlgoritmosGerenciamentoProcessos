@@ -24,7 +24,7 @@
                 <h3>FCFS (First-Come, First Served)</h3>
                 <p>Tempo médio de execução: <span id="fcfs-tempo-execucao"></span></p>
                 <p>Tempo médio de espera dos processos: <span id="fcfs-tempo-espera"></span></p>
-                <table class="table-fcfs">
+                <table class="table-fcfs tabela">
                     <thead>
                         <tr>
                             <th scope="col">Número do Processo</th>
@@ -43,7 +43,7 @@
                 <h3>SJF (Shortest Job First)</h3>
                 <p>Tempo médio de execução: <span id="sjf-tempo-execucao"></span></p>
                 <p>Tempo médio de espera dos processos: <span id="sjf-tempo-espera"></span></p>
-                <table class="table-sjf">
+                <table class="table-sjf tabela">
                     <thead>
                         <tr>
                             <th scope="col">Número do Processo</th>
@@ -58,30 +58,11 @@
                 </table>
             </section>
             
-            <section id="resultado-prioc" class="mb-3">
-                <h3>PRIOc</h3>
-                <p>Tempo médio de execução: <span id="prioc-tempo-execucao"></span></p>
-                <p>Tempo médio de espera dos processos: <span id="prioc-tempo-espera"></span></p>
-                <table class="table-prioc">
-                    <thead>
-                        <tr>
-                            <th scope="col">Número do Processo</th>
-                            <th scope="col">Tempo de Término</th>
-                            <th scope="col">Tempo Ativo</th>
-                            <th scope="col">Tempo de Espera</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tabela-prioc-body">
-                        <!-- Linhas da tabela serão adicionadas dinamicamente pelo JavaScript -->
-                    </tbody>
-                </table>
-            </section>   
-
             <section id="resultado-rr" class="mb-3">
                 <h3>Round Robin (RR)</h3>
                 <p>Tempo médio de execução: <span id="rr-tempo-execucao"></span></p>
                 <p>Tempo médio de espera dos processos: <span id="rr-tempo-espera"></span></p>
-                <table class="table-rr">
+                <table class="table-rr tabela">
                     <thead>
                         <tr>
                             <th scope="col">Número do Processo</th>
@@ -100,7 +81,7 @@
                 <p>Tempo médio de execução: <span id="srtf-tempo-execucao"></span></p>
                 <p>Tempo médio de espera dos processos: <span id="srtf-tempo-espera"></span></p>
             
-                <table class="table-srtf">
+                <table class="table-srtf tabela">
                     <thead>
                         <tr>
                             <th scope="col">Número do Processo</th>
@@ -114,11 +95,29 @@
                     </tbody>
                 </table>
             </section>
+            <section id="resultado-prioc" class="mb-3">
+                <h3>PRIOc</h3>
+                <p>Tempo médio de execução: <span id="prioc-tempo-execucao"></span></p>
+                <p>Tempo médio de espera dos processos: <span id="prioc-tempo-espera"></span></p>
+                <table class="table-prioc tabela">
+                    <thead>
+                        <tr>
+                            <th scope="col">Número do Processo</th>
+                            <th scope="col">Tempo de Término</th>
+                            <th scope="col">Tempo Ativo</th>
+                            <th scope="col">Tempo de Espera</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-prioc-body">
+                        <!-- Linhas da tabela serão adicionadas dinamicamente pelo JavaScript -->
+                    </tbody>
+                </table>
+            </section>   
             <section id="resultado-priop" class="mb-3">
                 <h3>PRIOp</h3>
                 <p>Tempo médio de execução: <span id="priop-tempo-execucao"></span></p>
                 <p>Tempo médio de espera dos processos: <span id="priop-tempo-espera"></span></p>
-                <table class="table-priop">
+                <table class="table-priop tabela">
                     <thead>
                         <tr>
                             <th scope="col">Número do Processo</th>

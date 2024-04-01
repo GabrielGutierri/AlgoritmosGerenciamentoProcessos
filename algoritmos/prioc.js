@@ -28,7 +28,7 @@ export const calculoPRIOc = (processes) => {
         while (processoMaiorPrioridade.tempoRestante > 0 ) {
             processoMaiorPrioridade.tempoRestante--;
             tempoAtual++;  
-            filaExecucaoPorTempo.push({tempo: tempoAtual, processo: processoMaiorPrioridade});
+            filaExecucaoPorTempo.push({tempo: tempoAtual, processo: processoMaiorPrioridade.numeroProcesso});
         }
 
         if (processoMaiorPrioridade.tempoRestante === 0) {
