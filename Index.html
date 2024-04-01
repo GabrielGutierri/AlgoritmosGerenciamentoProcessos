@@ -38,11 +38,45 @@
                     </tbody>
                 </table>
             </section>
+
             <section id="resultado-sjf" class="mb-3">
-                <h3>Shortest Job First (SJF)</h3>
+                <h3>SJF (Shortest Job First)</h3>
                 <p>Tempo médio de execução: <span id="sjf-tempo-execucao"></span></p>
                 <p>Tempo médio de espera dos processos: <span id="sjf-tempo-espera"></span></p>
+                <table class="table-sjf">
+                    <thead>
+                        <tr>
+                            <th scope="col">Número do Processo</th>
+                            <th scope="col">Tempo de Término</th>
+                            <th scope="col">Tempo Ativo</th>
+                            <th scope="col">Tempo de Espera</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-sjf-body">
+                        <!-- Linhas da tabela serão adicionadas dinamicamente pelo JavaScript -->
+                    </tbody>
+                </table>
             </section>
+            
+            <section id="resultado-prioc" class="mb-3">
+                <h3>PRIOc</h3>
+                <p>Tempo médio de execução: <span id="prioc-tempo-execucao"></span></p>
+                <p>Tempo médio de espera dos processos: <span id="prioc-tempo-espera"></span></p>
+                <table class="table-prioc">
+                    <thead>
+                        <tr>
+                            <th scope="col">Número do Processo</th>
+                            <th scope="col">Tempo de Término</th>
+                            <th scope="col">Tempo Ativo</th>
+                            <th scope="col">Tempo de Espera</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-prioc-body">
+                        <!-- Linhas da tabela serão adicionadas dinamicamente pelo JavaScript -->
+                    </tbody>
+                </table>
+            </section>   
+
             <section id="resultado-rr" class="mb-3">
                 <h3>Round Robin (RR)</h3>
                 <p>Tempo médio de execução: <span id="rr-tempo-execucao"></span></p>

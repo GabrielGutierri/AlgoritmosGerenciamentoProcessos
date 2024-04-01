@@ -56,39 +56,27 @@ enviarProcessosBtn.addEventListener('click', () => {
     for (let i = 0; i < listaInputs.length; i += 3) {
         const numeroProcesso = i / 3 + 1;
         const tempoChegada = parseInt(listaInputs[i].value);
+
         const tempoServico = parseInt(listaInputs[i + 1].value);
+
         const prioridade = parseInt(listaInputs[i + 2].value);
 
         const objetoProcesso = {
             numeroProcesso: numeroProcesso,
             tempoChegada: tempoChegada,
-            tempoEspera: 0,
+            tempoServico: tempoServico,
             prioridade: prioridade
         };
-
         processosArray.push(objetoProcesso);
     }
 
-    const resultadosMockados = {
-        fcfs: { tempoExecucao: '30s', tempoEspera: '10s' },
-        sjf: { tempoExecucao: '25s', tempoEspera: '5s' },
-        rr: { tempoExecucao: '35s', tempoEspera: '15s' },
-        srtf: { tempoExecucao: '20s', tempoEspera: '2s' }
-    };
-
-    
-    document.getElementById('sjf-tempo-execucao').textContent = resultadosMockados.sjf.tempoExecucao;
-    document.getElementById('sjf-tempo-espera').textContent = resultadosMockados.sjf.tempoEspera;
-    
     resultadoSimulacao.classList.remove('escondido');
-
-    //calculoPRIOc(processosArray);
-    //calculoSJF(processosArray);
+    criaTabelaSJF(processosArray);
     criaTabelaFCFS(processosArray);
-    criaTabelaSRTF(processosArray);
-    criaTabelaPRIOp(processosArray);
-    criaTabelaRR(processosArray);
-
+    criaTabelaPRIOc(processosArray);
+    //criaTabelaSRTF(processosArray);
+    //criaTabelaPRIOp(processosArray);
+    //criaTabelaRR(processosArray);
 });
 
 function criaTabelaFCFS(processos){
@@ -121,6 +109,88 @@ function criarTabelaFCFS(processos, temposEspera){
     });
 }
 
+
+function criaTabelaSJF(processos){
+    let retorno = calculoSJF(processos);
+    document.getElementById('sjf-tempo-execucao').textContent = retorno.mediaExecucao;
+    document.getElementById('sjf-tempo-espera').textContent = retorno.mediaEspera;
+
+    criarTabelaSJF(processos, retorno.filaPorTempo);
+}
+
+function criarTabelaSJF(processos, filaPorTempo){
+    let tabelaBody = document.getElementById("tabela-sjf-body");
+
+    processos.forEach(p => {
+        let newRow = tabelaBody.insertRow();
+        let cell1 = newRow.insertCell(0);
+        let cell2 = newRow.insertCell(1);
+        let cell3 = newRow.insertCell(2);
+        let cell4 = newRow.insertCell(3);
+        let tempoEspera = 0;
+
+        filaPorTempo.forEach(f => {
+            if (f.processo.numeroProcesso === p.numeroProcesso) {
+                // Cálculo do tempo de término
+                const tempoTermino = f.tempo;
+                
+                // Cálculo do tempo ativo
+                const tempoAtivo = tempoTermino - p.tempoChegada;
+
+                // Cálculo do tempo de espera
+                tempoEspera = tempoAtivo - p.tempoServico;
+                
+                // Adicione valores às células
+                cell1.innerHTML = p.numeroProcesso;
+                cell2.innerHTML = tempoTermino;
+                cell3.innerHTML = tempoAtivo;
+                cell4.innerHTML = tempoEspera;
+            }
+        });
+    });
+}
+
+function criaTabelaPRIOc(processos){
+    let retorno = calculoPRIOc(processos);
+    document.getElementById('prioc-tempo-execucao').textContent = retorno.mediaExecucao;
+    document.getElementById('prioc-tempo-espera').textContent = retorno.mediaEspera;
+
+    criarTabelaPRIOc(processos, retorno.filaPorTempo);
+}
+
+function criarTabelaPRIOc(processos, filaPorTempo){
+    let tabelaBody = document.getElementById("tabela-prioc-body");
+
+    processos.forEach(p => {
+        let newRow = tabelaBody.insertRow();
+        let cell1 = newRow.insertCell(0);
+        let cell2 = newRow.insertCell(1);
+        let cell3 = newRow.insertCell(2);
+        let cell4 = newRow.insertCell(3);
+        let tempoEspera = 0;
+
+        filaPorTempo.forEach(f => {
+            if (f.processo.numeroProcesso === p.numeroProcesso) {
+                // Cálculo do tempo de término
+                const tempoTermino = f.tempo;
+                
+                // Cálculo do tempo ativo
+                const tempoAtivo = tempoTermino - p.tempoChegada;
+
+                // Cálculo do tempo de espera
+                tempoEspera = tempoAtivo - p.tempoServico;
+                
+                // Adicione valores às células
+                cell1.innerHTML = p.numeroProcesso;
+                cell2.innerHTML = tempoTermino;
+                cell3.innerHTML = tempoAtivo;
+                cell4.innerHTML = tempoEspera;
+            }
+        });
+    });
+}
+
+
 function criaTabelaSRTF(processos){
     let retorno = calculoSRTF(processos);
     document.getElementById('srtf-tempo-execucao').textContent = retorno.mediaExecucao;
@@ -144,6 +214,7 @@ function criaTabelaPRIOp(processos){
 }
 
 function criarTabela(retornoAlgoritmo, bodyID) {
+
     let processos = retornoAlgoritmo.processos;
     let ultimosTempos = retornoAlgoritmo.ultimosProcessos;
     let temposEspera = retornoAlgoritmo.temposEspera;
