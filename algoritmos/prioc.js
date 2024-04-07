@@ -39,5 +39,5 @@ export const calculoPRIOc = (processes) => {
     }
     let mediaExecucao = calculaMediaExecucao(processes, filaExecucaoPorTempo);
     let mediaEspera = calculaMediaEspera(processes, filaExecucaoPorTempo);
-    return {mediaExecucao: mediaExecucao, mediaEspera: mediaEspera[0], temposEspera: mediaEspera[1], processos: processes, ultimosProcessos: mediaEspera[2], filaPorTempo: filaExecucaoPorTempo};
+    return {mediaExecucao: mediaExecucao, mediaEspera: mediaEspera[0], temposEspera: mediaEspera[1], processos: processes, ultimosProcessos: mediaEspera[2]};
 }
