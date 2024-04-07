@@ -71,46 +71,13 @@ enviarProcessosBtn.addEventListener('click', () => {
     }
 
     resultadoSimulacao.classList.remove('escondido');
-    let processos = [
-        {
-            numeroProcesso: 1,
-            tempoChegada: 0,
-            tempoServico: 5,
-            prioridade: 2
-        },
-        {
-            numeroProcesso: 2,
-            tempoChegada: 0,
-            tempoServico: 2,
-            prioridade: 3
-        },
-        {
-            numeroProcesso: 3,
-            tempoChegada: 1,
-            tempoServico: 4,
-            prioridade: 1
-        },
-        {
-            numeroProcesso: 4,
-            tempoChegada: 3,
-            tempoServico: 1,
-            prioridade: 4
-        },
-        {
-            numeroProcesso: 5,
-            tempoChegada: 5,
-            tempoServico: 2,
-            prioridade: 5
-        }
-
-       ];
-       processos.sort((a, b) => a.tempoChegada - b.tempoChegada);
-    criaTabelaSJF(processos);
-    criaTabelaFCFS(processos);
-    criaTabelaPRIOc(processos);
-    criaTabelaSRTF(processos);
-    criaTabelaPRIOp(processos);
-    criaTabelaRR(processos);
+    
+    criaTabelaSJF(processosArray);
+    criaTabelaFCFS(processosArray);
+    criaTabelaPRIOc(processosArray);
+    criaTabelaSRTF(processosArray);
+    criaTabelaPRIOp(processosArray);
+    criaTabelaRR(processosArray);
 });
 
 function criaTabelaFCFS(processos){
@@ -194,7 +161,7 @@ function criaTabelaPRIOc(processos){
 
 function criarTabelaPRIOc(processos, filaPorTempo){
     let tabelaBody = document.getElementById("tabela-prioc-body");
-
+    console.log(filaPorTempo);
     processos.forEach(p => {
         let newRow = tabelaBody.insertRow();
         let cell1 = newRow.insertCell(0);
@@ -204,7 +171,7 @@ function criarTabelaPRIOc(processos, filaPorTempo){
         let tempoEspera = 0;
 
         filaPorTempo.forEach(f => {
-            if (f.processo.numeroProcesso === p.numeroProcesso) {
+            if (f.processo === p.numeroProcesso) {
                 // Cálculo do tempo de término
                 const tempoTermino = f.tempo;
                 
