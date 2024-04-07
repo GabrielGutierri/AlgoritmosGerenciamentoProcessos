@@ -71,10 +71,6 @@ enviarProcessosBtn.addEventListener('click', () => {
     }
 
     resultadoSimulacao.classList.remove('escondido');
-<<<<<<< HEAD
-    
-=======
->>>>>>> 17136048266ab24671e60a2bd9b2c88d32ce2059
     criaTabelaSJF(processosArray);
     criaTabelaFCFS(processosArray);
     criaTabelaPRIOc(processosArray);
@@ -130,42 +126,6 @@ function criaTabelaPRIOc(processos){
     criarTabela(retorno, 'tabela-prioc-body', 'PRIOp');
 }
 
-<<<<<<< HEAD
-function criarTabelaPRIOc(processos, filaPorTempo){
-    let tabelaBody = document.getElementById("tabela-prioc-body");
-    console.log(filaPorTempo);
-    processos.forEach(p => {
-        let newRow = tabelaBody.insertRow();
-        let cell1 = newRow.insertCell(0);
-        let cell2 = newRow.insertCell(1);
-        let cell3 = newRow.insertCell(2);
-        let cell4 = newRow.insertCell(3);
-        let tempoEspera = 0;
-
-        filaPorTempo.forEach(f => {
-            if (f.processo === p.numeroProcesso) {
-                // Cálculo do tempo de término
-                const tempoTermino = f.tempo;
-                
-                // Cálculo do tempo ativo
-                const tempoAtivo = tempoTermino - p.tempoChegada;
-
-                // Cálculo do tempo de espera
-                tempoEspera = tempoAtivo - p.tempoServico;
-                
-                // Adicione valores às células
-                cell1.innerHTML = p.numeroProcesso;
-                cell2.innerHTML = tempoTermino;
-                cell3.innerHTML = tempoAtivo;
-                cell4.innerHTML = tempoEspera;
-            }
-        });
-    });
-}
-
-
-=======
->>>>>>> 17136048266ab24671e60a2bd9b2c88d32ce2059
 function criaTabelaSRTF(processos){
     let retorno = calculoSRTF(processos);
     document.getElementById('srtf-tempo-execucao').textContent = retorno.mediaExecucao;
